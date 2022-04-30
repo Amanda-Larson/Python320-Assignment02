@@ -3,6 +3,11 @@ Provides a basic frontend
 '''
 import sys
 import main
+from loguru import logger
+import pysnooper
+
+logger.info("Let's get to debugging")
+log = logger.add("out.log", backtrace=True, diagnose=True)
 
 
 def load_users():
@@ -20,7 +25,7 @@ def load_status_updates():
     filename = input('Enter filename for status file: ')
     main.load_status_updates(filename, status_collection)
 
-
+@pysnooper.snoop()
 def add_user():
     '''
     Adds a new user into the database
@@ -38,7 +43,7 @@ def add_user():
     else:
         print("User was successfully added")
 
-
+@pysnooper.snoop()
 def update_user():
     '''
     Updates information for an existing user
@@ -47,12 +52,12 @@ def update_user():
     email = input('User email: ')
     user_name = input('User name: ')
     user_last_name = input('User last name: ')
-    if not main.update_user(user_id, email, user_name, user_last_name):
+    if not main.update_user(user_id, email, user_name, user_last_name, user_collection):
         print("An error occurred while trying to update user")
     else:
         print("User was successfully updated")
 
-
+@pysnooper.snoop()
 def search_user():
     '''
     Searches a user in the database
@@ -67,7 +72,7 @@ def search_user():
         print(f"Name: {result.user_name}")
         print(f"Last name: {result.user_last_name}")
 
-
+@pysnooper.snoop()
 def delete_user():
     '''
     Deletes user from the database
@@ -78,7 +83,7 @@ def delete_user():
     else:
         print("User was successfully deleted")
 
-
+@pysnooper.snoop()
 def save_users():
     '''
     Saves user database into a file
@@ -86,7 +91,7 @@ def save_users():
     filename = input('Enter filename for users file: ')
     main.save_users(filename, user_collection)
 
-
+@pysnooper.snoop()
 def add_status():
     '''
     Adds a new status into the database
@@ -99,7 +104,7 @@ def add_status():
     else:
         print("New status was successfully added")
 
-
+@pysnooper.snoop()
 def update_status():
     '''
     Updates information for an existing status
@@ -112,7 +117,7 @@ def update_status():
     else:
         print("Status was successfully updated")
 
-
+@pysnooper.snoop()
 def search_status():
     '''
     Searches a status in the database
@@ -126,7 +131,7 @@ def search_status():
         print(f"Status ID: {result.status_id}")
         print(f"Status text: {result.status_text}")
 
-
+@pysnooper.snoop()
 def delete_status():
     '''
     Deletes status from the database
@@ -171,6 +176,8 @@ if __name__ == '__main__':
         'L': save_status,
         'Q': quit_program
     }
+
+
     while True:
         user_selection = input("""
                             A: Load user database
@@ -189,6 +196,6 @@ if __name__ == '__main__':
 
                             Please enter your choice: """)
         if user_selection.upper() in menu_options:
-            menu_options[user_selection]()
+            menu_options[user_selection.upper()]()
         else:
             print("Invalid option")
