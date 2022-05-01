@@ -3,10 +3,10 @@
 # Who: ALarson
 # What/When: 4/24/2022 - started assignment
 """
-
+import csv
 import user_status
 import users
-import csv
+
 
 
 def init_user_collection():
@@ -122,6 +122,7 @@ def update_user(user_id, email, user_name, user_last_name, user_collection):
     updated_user = user_collection.modify_user(user_id, email, user_name, user_last_name)
     return updated_user
 
+
 def delete_user(user_id, user_collection):
     """
     Deletes a user from user_collection.
@@ -130,7 +131,8 @@ def delete_user(user_id, user_collection):
     - Returns False if there are any errors (such as user_id not found)
     - Otherwise, it returns True.
     """
-    user_collection.delete_user(user_id)
+    del_user = user_collection.delete_user(user_id)
+    return del_user
 
 
 def search_user(user_id, user_collection):
@@ -142,9 +144,11 @@ def search_user(user_id, user_collection):
     - If the user is found, returns the corresponding User instance.
     - Otherwise, it returns None.
     """
+    find_user = user_collection.search_user(user_id)
+    return find_user
 
 
-def add_status(user_id, status_id, status_text, status_collection):
+def add_status(status_id, user_id, status_text, status_collection):
     """
     Creates a new instance of UserStatus and stores it in
     user_collection(which is an instance of UserStatusCollection)
@@ -155,6 +159,8 @@ def add_status(user_id, status_id, status_text, status_collection):
       user_collection.add_status() returns False).
     - Otherwise, it returns True.
     """
+    add_new_status = status_collection.add_status(status_id, user_id, status_text)
+    return add_new_status
 
 
 def update_status(status_id, user_id, status_text, status_collection):
@@ -165,7 +171,8 @@ def update_status(status_id, user_id, status_text, status_collection):
     - Returns False if there any errors.
     - Otherwise, it returns True.
     """
-    pass
+    updated_status = status_collection.modify_status(status_id, user_id, status_text)
+    return updated_status
 
 
 def delete_status(status_id, status_collection):
@@ -176,7 +183,8 @@ def delete_status(status_id, status_collection):
     - Returns False if there are any errors (such as status_id not found)
     - Otherwise, it returns True.
     """
-
+    del_status = status_collection.delete_status(status_id)
+    return del_status
 
 
 def search_status(status_id, status_collection):
@@ -188,4 +196,5 @@ def search_status(status_id, status_collection):
     UserStatus instance.
     - Otherwise, it returns None.
     """
-
+    find_status = status_collection.search_status(status_id)
+    return find_status

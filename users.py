@@ -3,6 +3,11 @@ Classes for user information for the social network project
 """
 # pylint: disable=R0903
 
+from loguru import logger
+
+logger.info("Let's get to debugging users.py")
+logger.add("users_and_status.log", backtrace=True, diagnose=True)
+
 
 class Users:
     """
@@ -14,6 +19,7 @@ class Users:
         self.email = email
         self.user_name = user_name
         self.user_last_name = user_last_name
+        logger.info("User class instantiated")
 
 
 class UserCollection():
@@ -22,14 +28,16 @@ class UserCollection():
     """
 
     def __init__(self):
+        logger.info("User Collection instantiated.")
         self.database = {}
+
 
     def add_user(self, user_id, email, user_name, user_last_name):
         """
         Adds a new user to the collection
         """
         if user_id in self.database:
-            # Rejects new status if status_id already exists
+            logger.info("Reject new status  -  status_id already exists")
             return False
         new_user = Users(user_id, email, user_name, user_last_name)
         self.database[user_id] = new_user
@@ -40,6 +48,7 @@ class UserCollection():
         Modifies an existing user
         """
         if user_id not in self.database:
+            logger.info(f'{user_id} not in the database')
             return False
         self.database[user_id].email = email
         self.database[user_id].user_name = user_name
@@ -51,6 +60,7 @@ class UserCollection():
         Deletes an existing user
         """
         if user_id not in self.database:
+            logger.info(f'{user_id} not in the database')
             return False
         del self.database[user_id]
         return True
@@ -60,5 +70,6 @@ class UserCollection():
         Searches for user data
         """
         if user_id not in self.database:
+            logger.info(f'{user_id} not in the database')
             return Users(None, None, None, None)
         return self.database[user_id]
