@@ -3,7 +3,7 @@ Provides a basic frontend
 """
 import sys
 from loguru import logger
-import pysnooper
+# import pysnooper
 import main
 
 
@@ -11,13 +11,13 @@ logger.info("Let's get to debugging")
 logger.add("out.log", backtrace=True, diagnose=True)
 
 
-# @pysnooper.snoop()
+# @pysnooper.snoop(depth=3)
 def load_users():
     """
     Loads user accounts from a file
     """
     filename = input('Enter filename of user file: ')
-    main.load_users(filename, user_selection)
+    main.load_users(filename, user_collection)
 
 
 def load_status_updates():
@@ -28,7 +28,7 @@ def load_status_updates():
     main.load_status_updates(filename, status_collection)
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def add_user():
     """
     Adds a new user into the database
@@ -47,7 +47,7 @@ def add_user():
         print("User was successfully added")
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def update_user():
     """
     Updates information for an existing user
@@ -65,7 +65,7 @@ def update_user():
         logger.exception("NEW EXCEPTION! - Look here!")
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def search_user():
     """
     Searches a user in the database
@@ -81,7 +81,7 @@ def search_user():
         print(f"Last name: {result.user_last_name}")
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def delete_user():
     """
     Deletes user from the database
@@ -93,20 +93,20 @@ def delete_user():
         print("User was successfully deleted")
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def save_users():
-    '''
+    """
     Saves user database into a file
-    '''
+    """
     filename = input('Enter filename for users file: ')
     main.save_users(filename, user_collection)
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def add_status():
-    '''
+    """
     Adds a new status into the database
-    '''
+    """
     user_id = input('User ID: ')
     status_id = input('Status ID: ')
     status_text = input('Status text: ')
@@ -116,11 +116,11 @@ def add_status():
         print("New status was successfully added")
 
 
-@pysnooper.snoop()
+# @pysnooper.snoop()
 def update_status():
-    '''
+    """
     Updates information for an existing status
-    '''
+    """
     user_id = input('User ID: ')
     status_id = input('Status ID: ')
     status_text = input('Status text: ')

@@ -4,9 +4,10 @@
 # What/When: 4/24/2022 - started assignment
 """
 import csv
+
+
 import user_status
 import users
-
 
 
 def init_user_collection():
@@ -41,7 +42,10 @@ def load_users(filename, user_collection):
     """
     try:
         with open(filename, newline='', encoding="UTF-8") as file:
-            user_collection.database = csv.DictReader(file)
+            file_users = csv.DictReader(file)
+            for row in file_users:
+                user_collection.add_user(row['USER_ID'], row['EMAIL'],
+                                         row['NAME'], row['LASTNAME'])
     except FileNotFoundError:
         print('File not found')
 
@@ -62,12 +66,13 @@ def save_users(filename, user_collection):
     try:
         with open(filename, mode='a', newline='', encoding="UTF-8") as file:
             writer = csv.DictWriter(file, delimiter=',', fieldnames=header)
+            writer.writeheader()
             for key, values in user_collection().database:
                 row = {key: values}
                 writer.writerow(row)
                 return True
     except FileNotFoundError:
-        print('File not found')
+        print(f'File {filename} not found')
         return False
 
 
@@ -83,6 +88,14 @@ def load_status_updates(filename, status_collection):
       source CSV file)
     - Otherwise, it returns True.
     """
+    try:
+        with open(filename, newline='', encoding="UTF-8") as file:
+            file_users = csv.DictReader(file)
+            for row in file_users:
+                status_collection.add_status(row['STATUS_ID'], row['USER_ID'],
+                                           row['STATUS_TEXT'])
+    except FileNotFoundError:
+        print('File not found')
 
 
 def save_status_updates(filename, status_collection):
